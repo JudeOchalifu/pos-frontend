@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+::ng-deep .my-custom-button {
+  background-color: red !important;
+  color: black !important;
+}
+
+

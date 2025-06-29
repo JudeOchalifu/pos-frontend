@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Blurs the content behind the spinner */
+.blurred {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The overlay that sits on top of the blurred content */
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.4);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Optional spinner container */
+.spinner-container {
+  text-align: center;
+}
+

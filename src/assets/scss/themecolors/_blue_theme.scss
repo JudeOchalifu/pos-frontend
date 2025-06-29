@@ -1,0 +1,11 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+html .blue_theme {
+  --mat-sys-primary: rgb(255, 0, 0);
+  --mat-sys-primary-fixed-dim: rgba(255, 0, 0, 0.15); /* light red tint */
+  --mat-sys-secondary: rgb(200, 0, 0); /* darker red for contrast */
+  --mat-sys-secondary-fixed-dim: rgba(200, 0, 0, 0.15); /* light transparent red */
+
+}
+

@@ -1,5 +1,6 @@
 @use "../variables" as *;
 
+// Enhanced sidebar with mobile responsiveness
 .mat-drawer.sidebarNav {
   width: $sidenav-desktop;
   flex-shrink: 0;
@@ -8,6 +9,29 @@
   overflow-x: hidden;
   border-right-width: 0;
   box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.03);
+  
+  // Mobile responsive behavior
+  @media (max-width: 768px) {
+    width: 100vw;
+    max-width: 320px;
+    
+    // Enhanced touch interactions
+    .sidebar-list .mdc-list .menu-list-item {
+      min-height: 56px; // Touch-friendly height
+      padding: 16px !important;
+      
+      // Active touch state
+      &:active {
+        background-color: rgba(0, 123, 255, 0.1);
+        transform: scale(0.98);
+      }
+    }
+  }
+  
+  // Tablet responsive behavior
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 280px;
+  }
 }
 
 .branding {
@@ -15,17 +39,42 @@
   min-height: $header-height;
   display: flex;
   align-items: center;
+  
+  // Mobile branding adjustments
+  @media (max-width: 768px) {
+    padding: 16px;
+    min-height: 64px;
+    
+    img, svg {
+      max-height: 32px;
+      width: auto;
+    }
+  }
 }
 
 .sidebar-list {
   &.mdc-list {
     padding: 0 18px;
     width: $sidenav-desktop;
+    
+    // Mobile padding adjustments
+    @media (max-width: 768px) {
+      padding: 0 12px;
+      width: 100%;
+    }
+    
     .sub-item-icon {
       width: 16px !important;
       height: 16px !important;
       opacity: 0.8;
       margin-inline-end: 13px;
+      
+      // Larger touch targets on mobile
+      @media (max-width: 768px) {
+        width: 20px !important;
+        height: 20px !important;
+        margin-inline-end: 16px;
+      }
     }
 
     .mdc-list-group__subheader {
@@ -41,6 +90,14 @@
       }
       .caption-text {
         display: inline;
+      }
+      
+      // Mobile subheader styling
+      @media (max-width: 768px) {
+        font-size: 12px;
+        padding: 12px 0 8px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
     }
 
@@ -71,6 +128,13 @@
         width: calc(100% - 32px);
         margin-left: 16px;
       }
+      
+      // Mobile divider adjustments
+      @media (max-width: 768px) {
+        margin: 16px 0;
+        margin-left: 12px;
+        width: calc(100% - 24px);
+      }
     }
 
     .menu-list-item {
@@ -91,6 +155,8 @@
       padding: 11px 16px !important;
       margin-bottom: 4px;
       width: 100%;
+      transition: all 0.2s ease;
+      
       &.twoline {
         height: 60px;
         align-items: center;
@@ -111,6 +177,13 @@
         align-items: center;
         justify-content: center;
         font-size: 10px;
+        
+        // Mobile chip styling
+        @media (max-width: 768px) {
+          height: 20px;
+          font-size: 11px;
+          padding: 0 6px;
+        }
       }
 
       &.activeMenu {
@@ -133,12 +206,26 @@
         line-height: 0px;
         fill: transparent !important;
         color: var(--mat-sys-on-background);
+        
+        // Mobile icon adjustments
+        @media (max-width: 768px) {
+          width: 20px;
+          height: 20px;
+          margin-right: 12px;
+        }
       }
 
       .mdc-list-item__primary-text {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        font-size: 14px;
+        
+        // Mobile text adjustments
+        @media (max-width: 768px) {
+          font-size: 15px;
+          font-weight: 500;
+        }
 
         .arrow-icon {
           display: flex;
@@ -150,7 +237,34 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            
+            // Mobile arrow adjustments
+            @media (max-width: 768px) {
+              font-size: 20px;
+              width: 20px;
+              height: 20px;
+            }
           }
+        }
+      }
+      
+      // Enhanced mobile interactions
+      @media (max-width: 768px) {
+        height: 56px;
+        padding: 16px !important;
+        margin-bottom: 2px;
+        border-radius: 8px;
+        
+        // Touch feedback
+        &:active {
+          background-color: rgba(0, 123, 255, 0.1);
+          transform: scale(0.98);
+        }
+        
+        // Focus styles for accessibility
+        &:focus-visible {
+          outline: 2px solid #007bff;
+          outline-offset: 2px;
         }
       }
     }
@@ -161,8 +275,91 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  
+  // Mobile layout adjustments
+  @media (max-width: 768px) {
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .side-img {
   margin-right: -30px;
+  
+  // Mobile image adjustments
+  @media (max-width: 768px) {
+    margin-right: 0;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+// Mobile overlay for sidebar
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
+
+// Enhanced scrollbar for mobile
+.sidebar-list {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .menu-list-item {
+    border: 1px solid #000;
+    
+    &.activeMenu {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .mat-drawer.sidebarNav,
+  .menu-list-item {
+    transition: none;
+  }
 }

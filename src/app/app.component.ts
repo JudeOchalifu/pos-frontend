@@ -1,20 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { provideToastr } from 'ngx-toastr';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, LoadingComponent],
   templateUrl: './app.component.html'
 })
 export class AppComponent {
   title = 'POS Main';
 }
-
-// bootstrap AFTER the class declaration
-bootstrapApplication(AppComponent, {
-  providers: [provideAnimations(), provideToastr()]
-});

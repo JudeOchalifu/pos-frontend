@@ -14,7 +14,8 @@ import {TablerIconsModule} from 'angular-tabler-icons';
 import {HeaderComponent} from './header/header.component';
 import {SidebarComponent} from './sidebar/sidebar.component';
 import {AppNavItemComponent} from './sidebar/nav-item/nav-item.component';
-import {navItems} from './sidebar/sidebar-data';
+import {navItems, getFilteredNavItems} from './sidebar/sidebar-data';
+import {AuthenticationService} from 'src/app/services/authentication.service';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -63,6 +64,7 @@ export class FullComponent implements OnInit {
     private settings: CoreService,
     private router: Router,
     private breakpointObserver: BreakpointObserver,
+    private authService: AuthenticationService,
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -88,6 +90,15 @@ export class FullComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateNavigationBasedOnRole();
+  }
+
+  private updateNavigationBasedOnRole() {
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser && currentUser.appUserRoles) {
+      const userRoles = currentUser.appUserRoles.map(role => role.name);
+      this.navItems = getFilteredNavItems(userRoles);
+    }
   }
 
   ngOnDestroy() {

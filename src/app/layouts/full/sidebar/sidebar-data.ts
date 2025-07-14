@@ -14,27 +14,39 @@ export const navItems: NavItem[] = [
     iconName: 'solar:widget-add-line-duotone',
     route: '/sales',
     chip: false,
-    external: true,
+    external: false,
     chipClass: 'bg-secondary text-white',
     chipContent: 'PRO',
   },
   {
-    displayName: 'User',
-    iconName: 'solar:chart-line-duotone',
-    route: '/user-management',
+    displayName: 'Users',
+    iconName: 'solar:users-group-rounded-line-duotone',
+    route: '/users',
     chip: false,
-    external: true,
+    external: false,
     chipClass: 'bg-secondary text-white',
     chipContent: 'PRO',
+    roles: ['SUPER_ADMIN'] // Only show for admin users
   },
   {
     displayName: 'CRM',
     iconName: 'solar:screencast-2-line-duotone',
     route: '/dashboard',
     chip: true,
-    external: true,
+    external: false,
     chipClass: 'bg-secondary text-white',
     chipContent: 'PRO',
   }
-
 ];
+
+// Function to get filtered nav items based on user roles
+export function getFilteredNavItems(userRoles: string[]): NavItem[] {
+  return navItems.filter(item => {
+    // If no roles specified, show to everyone
+    if (!item.roles) {
+      return true;
+    }
+    // Check if user has any of the required roles
+    return item.roles.some(role => userRoles.includes(role));
+  });
+}

@@ -4,32 +4,49 @@ import {
   importProvidersFrom,
 } from '@angular/core';
 import {
-  provideHttpClient,
+  HTTP_INTERCEPTORS,
+  provideHttpClient, withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { routes } from './app.routes';
+import {routes} from './app.routes';
 import {
   provideRouter,
   withComponentInputBinding,
   withInMemoryScrolling,
 } from '@angular/router';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideClientHydration } from '@angular/platform-browser';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {provideClientHydration} from '@angular/platform-browser';
 
 // icons
-import { TablerIconsModule } from 'angular-tabler-icons';
+import {TablerIconsModule} from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 
 // perfect scrollbar
-import { NgScrollbarModule } from 'ngx-scrollbar';
+import {NgScrollbarModule} from 'ngx-scrollbar';
 
 //Import all material modules
-import { MaterialModule } from './material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MaterialModule} from './material.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {provideNativeDateAdapter} from "@angular/material/core";
+import {AuthInterceptor} from "./auth.interceptor";
+import {ErrorInterceptor} from "./error.interceptor";
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
+    provideNativeDateAdapter(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(
       routes,
       withInMemoryScrolling({
@@ -38,9 +55,14 @@ export const appConfig: ApplicationConfig = {
       }),
       withComponentInputBinding()
     ),
-    provideHttpClient(withInterceptorsFromDi()),
     provideClientHydration(),
     provideAnimationsAsync(),
+    provideToastr({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      progressBar: true
+    }),
     importProvidersFrom(
       FormsModule,
       ReactiveFormsModule,

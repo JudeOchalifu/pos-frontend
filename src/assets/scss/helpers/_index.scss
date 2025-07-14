@@ -7,7 +7,7 @@
 @use "flexbox";
 @use "display";
 @use "border";
-@use "text";
+@use "custom-flex";
 @use "spacing";
 @use "rounded";
 
@@ -15,10 +15,8 @@ $utilities: functions.map-collect(
   variables.$utilities,
   display.$utilities,
   flexbox.$utilities,
-  spacing.$utilities,
   border.$utilities,
-  rounded.$utilities,
-  text.$utilities
+  rounded.$utilities
 );
 
 @each $key, $utility in $utilities {

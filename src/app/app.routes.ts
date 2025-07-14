@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import {LoginGuard} from "./login.guard";
+import {RoleGuard} from "./guards/role.guard";
 import {SalesComponent} from "./components/sales/sales.component";
 
 export const routes: Routes = [
@@ -24,6 +25,18 @@ export const routes: Routes = [
         path: 'sales',
         component: SalesComponent,
         canActivate: [LoginGuard]
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('./pages/users/users.component').then(m => m.UsersComponent),
+        canActivate: [LoginGuard, RoleGuard],
+        data: { roles: ['SUPER_ADMIN'] }
+      },
+      {
+        path: 'users/edit/:id',
+        loadComponent: () => import('./pages/users/edit-user/edit-user.component').then(m => m.EditUserComponent),
+        canActivate: [LoginGuard, RoleGuard],
+        data: { roles: ['SUPER_ADMIN'] }
       },
       {
         path: 'ui-components',

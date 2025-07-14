@@ -1,33 +1,156 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<!-- Loading overlay -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <mat-spinner diameter="40"></mat-spinner>
+</div>
 
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
+<mat-card class="filter-box">
+  <form class="filter-form" (ngSubmit)="onFilter()">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Sales Person</mat-label>
+      <mat-select [(ngModel)]="selectedUser" name="selectedUser">
+        <mat-option value="">All Sales Persons</mat-option>
+        <mat-option *ngFor="let user of users" [value]="user.id">
+          {{ user.firstName }} {{ user.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="selectedStatus" name="selectedStatus">
+        <mat-option value="">All Status</mat-option>
+        <mat-option value="OPEN">OPEN</mat-option>
+        <mat-option value="CLOSED">CLOSED</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-  </ng-container>
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="picker1" [(ngModel)]="startDate" name="startDate"/>
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate" name="endDate"/>
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <th mat-header-cell *matHeaderCellDef> Weight </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-  </ng-container>
+    <div class="button-container">
+      <button mat-stroked-button color="primary" type="submit">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+      <button mat-stroked-button type="button" (click)="clearFilters()">
+        <mat-icon>clear</mat-icon>
+        Clear
+      </button>
+    </div>
+  </form>
+</mat-card>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="symbol">
-    <th mat-header-cell *matHeaderCellDef> Symbol </th>
-    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-  </ng-container>
+<!-- Desktop Table Layout -->
+<div class="table-container">
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="table">
+      <!-- SN Column -->
+      <ng-container matColumnDef="sn">
+        <th mat-header-cell *matHeaderCellDef> S/N</th>
+        <td mat-cell *matCellDef="let row; let i = index">
+          {{ getSerialNumber(i) }}
+        </td>
+      </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+      <!-- User Column -->
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef> User</th>
+        <td mat-cell *matCellDef="let sale"> {{ sale.userFirstName }} {{ sale.userLastName }}</td>
+      </ng-container>
 
+      <!-- Gross Amount -->
+      <ng-container matColumnDef="grossAmount">
+        <th mat-header-cell *matHeaderCellDef> Gross Amount</th>
+        <td mat-cell *matCellDef="let sale"> {{ sale.grossAmount | number: '1.2-2' }}</td>
+      </ng-container>
+
+      <!-- Initiation Time -->
+      <ng-container matColumnDef="initiationTime">
+        <th mat-header-cell *matHeaderCellDef> Initiated</th>
+        <td mat-cell *matCellDef="let sale"> {{ sale.initiationTime | date:'short' }}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="closed">
+        <th mat-header-cell *matHeaderCellDef> Status</th>
+        <td mat-cell *matCellDef="let sale" class="status-cell">
+          <span class="status-indicator" [class.open]="!sale.closed" [class.closed]="sale.closed">
+            {{ sale.closed ? 'CLOSED' : 'OPEN' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Table Number -->
+      <ng-container matColumnDef="tableNumber">
+        <th mat-header-cell *matHeaderCellDef> Table Number</th>
+        <td mat-cell *matCellDef="let sale"> {{ sale.tableNumber }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="no-data-row" *matNoDataRow>
+        <td [attr.colspan]="displayedColumns.length" class="text-center">
+          <mat-icon>inbox</mat-icon>
+          <p>No sales to show at this time</p>
+        </td>
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>
+
+<!-- Mobile Card Layout -->
+<div class="mobile-card-layout">
+  <div *ngFor="let sale of dataSource.data; let i = index" class="sale-card">
+    <div class="card-header">
+      <div class="user-info">
+        {{ sale.userFirstName }} {{ sale.userLastName }}
+      </div>
+      <span class="status-badge" [class.open]="!sale.closed" [class.closed]="sale.closed">
+        {{ sale.closed ? 'CLOSED' : 'OPEN' }}
+      </span>
+    </div>
+    <div class="card-content">
+      <div class="info-item">
+        <span class="label">Gross Amount</span>
+        <span class="value">{{ sale.grossAmount | number: '1.2-2' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Table Number</span>
+        <span class="value">{{ sale.tableNumber }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Initiated</span>
+        <span class="value">{{ sale.initiationTime | date:'short' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">S/N</span>
+        <span class="value">{{ getSerialNumber(i) }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile empty state -->
+  <div *ngIf="dataSource.data.length === 0" class="mobile-empty-state">
+    <mat-icon>inbox</mat-icon>
+    <p>No sales to show at this time</p>
+  </div>
+</div>
+
+<!-- Mobile Pagination -->
+<div class="mobile-pagination" *ngIf="dataSource.data.length > 0">
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+  </mat-paginator>
+</div>

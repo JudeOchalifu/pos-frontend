@@ -1,0 +1,75 @@
+{
+  "folders": [
+    {
+      "name": "Frontend (Angular)",
+      "path": "."
+    },
+    {
+      "name": "Backend (Spring Boot)",
+      "path": "C:/jcodes/dev/pos-main"
+    }
+  ],
+  "settings": {
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/target": true,
+      "**/.angular": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-vscode.vscode-typescript-next",
+      "angular.ng-template",
+      "redhat.java",
+      "vscjava.vscode-java-pack",
+      "vscjava.vscode-spring-boot-dashboard",
+      "vscjava.vscode-spring-initializr"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Start Frontend",
+        "type": "shell",
+        "command": "npm",
+        "args": ["start"],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "new"
+        }
+      },
+      {
+        "label": "Start Backend",
+        "type": "shell",
+        "command": "./mvnw",
+        "args": ["spring-boot:run"],
+        "options": {
+          "cwd": "C:/jcodes/dev/pos-main"
+        },
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "new"
+        }
+      },
+      {
+        "label": "Start Both (Frontend + Backend)",
+        "dependsOrder": "parallel",
+        "dependsOn": ["Start Frontend", "Start Backend"],
+        "group": "build"
+      }
+    ]
+  }
+} 

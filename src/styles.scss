@@ -1,7 +1,81 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: "Poppins", sans-serif; }
+
+/* Ensure Poppins is applied globally but preserve Material Icons */
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Material Design components */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-card,
+.mat-mdc-form-field,
+.mat-mdc-table,
+.mat-mdc-paginator,
+.mat-mdc-chip,
+.mat-mdc-select,
+.mat-mdc-input,
+.mat-mdc-checkbox,
+.mat-mdc-radio-button,
+.mat-mdc-slide-toggle,
+.mat-mdc-slider,
+.mat-mdc-progress-bar,
+.mat-mdc-progress-spinner,
+.mat-mdc-snack-bar,
+.mat-mdc-dialog,
+.mat-mdc-menu,
+.mat-mdc-tooltip,
+.mat-mdc-toolbar,
+.mat-mdc-sidenav,
+.mat-mdc-list,
+.mat-mdc-list-item,
+.mat-mdc-tab,
+.mat-mdc-tab-group,
+.mat-mdc-accordion,
+.mat-mdc-expansion-panel,
+.mat-mdc-stepper,
+.mat-mdc-datepicker,
+.mat-mdc-autocomplete {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Preserve Material Icons font */
+.mat-icon,
+.material-icons,
+[class*="mat-icon"],
+[class*="material-icons"] {
+  font-family: "Material Icons" !important;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ensure button icons are properly sized */
+button mat-icon,
+.mat-mdc-button mat-icon,
+.mat-mdc-raised-button mat-icon,
+.mat-mdc-outlined-button mat-icon {
+  font-family: "Material Icons" !important;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 /* Blurs the content behind the spinner */
 .blurred {
   filter: blur(4px);
@@ -27,5 +101,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Optional spinner container */
 .spinner-container {
   text-align: center;
+}
+
+.filter-box {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: end;
+}
+
+.filter-field {
+  width: 200px;
+  min-width: 180px;
+}
+
+button[type="submit"] {
+  height: 56px;
+  align-self: flex-end;
 }
 

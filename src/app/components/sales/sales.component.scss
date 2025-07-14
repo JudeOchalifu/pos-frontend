@@ -1,0 +1,587 @@
+// Enhanced table styling with mobile responsiveness
+.mat-elevation-z8 {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+// Desktop table styling with enhanced borders and lines
+table {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  border-collapse: collapse;
+  background: white;
+
+  // Table header styling
+  th.mat-header-cell {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #495057;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 18px 16px;
+    border-bottom: 3px solid #dee2e6;
+    border-right: 1px solid #e9ecef;
+    white-space: nowrap;
+    position: relative;
+    
+    // Add subtle shadow to header
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    // Remove border from last header cell
+    &:last-child {
+      border-right: none;
+    }
+    
+    // Add hover effect to headers
+    &:hover {
+      background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    }
+  }
+
+  // Table cell styling
+  td.mat-cell {
+    color: #333;
+    padding: 16px;
+    border-bottom: 1px solid #e9ecef;
+    border-right: 1px solid #f8f9fa;
+    vertical-align: middle;
+    font-weight: 500;
+    line-height: 1.4;
+    
+    // Remove border from last cell in each row
+    &:last-child {
+      border-right: none;
+    }
+    
+    // Add subtle transition for hover effects
+    transition: all 0.2s ease;
+  }
+
+  // Table row styling
+  tr.mat-row {
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+    
+    // Hover effect for rows
+    &:hover {
+      background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+      border-left-color: #007bff;
+      transform: translateX(2px);
+      box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+      
+      td.mat-cell {
+        border-bottom-color: #007bff;
+        color: #2c3e50;
+      }
+    }
+    
+    // Alternating row colors
+    &:nth-child(even) {
+      background-color: #fafbfc;
+      
+      &:hover {
+        background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+      }
+    }
+    
+    // First row styling
+    &:first-child {
+      border-top: 1px solid #e9ecef;
+    }
+    
+    // Last row styling
+    &:last-child {
+      border-bottom: 2px solid #dee2e6;
+      
+      td.mat-cell {
+        border-bottom: none;
+      }
+    }
+  }
+  
+  // Empty state row styling
+  .no-data-row {
+    td {
+      text-align: center;
+      padding: 40px 20px;
+      font-style: italic;
+      color: #6c757d;
+      background: #f8f9fa;
+      border-bottom: none;
+      
+      mat-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 16px;
+        opacity: 0.5;
+        display: block;
+        margin: 0 auto 16px auto;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Enhanced table container with better borders
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+  background: white;
+  margin-bottom: 24px;
+  
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f3f4;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+    border: 1px solid #f1f3f4;
+    
+    &:hover {
+      background: #a8a8a8;
+    }
+  }
+  
+  // Add subtle border to table
+  table {
+    border: 1px solid #e9ecef;
+  }
+}
+
+// Status column enhanced styling
+.status-cell {
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 80px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+    
+    &.open {
+      background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+      color: #155724;
+      border-color: #c3e6cb;
+    }
+    
+    &.closed {
+      background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+      color: #721c24;
+      border-color: #f5c6cb;
+    }
+  }
+}
+
+// Enhanced number formatting for amounts
+td.mat-cell {
+  // Amount column styling
+  &:nth-child(3) { // Gross Amount column
+    font-weight: 600;
+    color: #2c3e50;
+    font-family: 'Poppins', monospace;
+  }
+  
+  // Date column styling
+  &:nth-child(4) { // Initiation Time column
+    color: #6c757d;
+    font-size: 13px;
+  }
+  
+  // Table number column styling
+  &:nth-child(6) { // Table Number column
+    font-weight: 600;
+    color: #495057;
+    text-align: center;
+  }
+}
+
+// Mobile card layout for small screens
+.mobile-card-layout {
+  display: none;
+  
+  .sale-card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #007bff;
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      
+      .user-info {
+        font-weight: 600;
+        color: #333;
+      }
+      
+      .status-badge {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        
+        &.open {
+          background-color: #d4edda;
+          color: #155724;
+        }
+        
+        &.closed {
+          background-color: #f8d7da;
+          color: #721c24;
+        }
+      }
+    }
+    
+    .card-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 13px;
+      
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        
+        .label {
+          color: #6c757d;
+          font-size: 11px;
+          text-transform: uppercase;
+          font-weight: 600;
+          margin-bottom: 2px;
+        }
+        
+        .value {
+          color: #333;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+// Enhanced filter form styling
+.filter-box {
+  margin-bottom: 24px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 200px;
+  
+  // Enhanced touch targets for mobile
+  ::ng-deep .mat-mdc-form-field {
+    .mat-mdc-form-field-flex {
+      min-height: 56px;
+    }
+    
+    .mat-mdc-text-field-wrapper {
+      border-radius: 8px;
+    }
+  }
+}
+
+// Button container with improved mobile styling
+.button-container {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-left: auto;
+  
+  button {
+    height: 56px;
+    min-width: 120px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+// Responsive design for different screen sizes
+@media (max-width: 1024px) {
+  .filter-form {
+    gap: 12px;
+  }
+  
+  .filter-field {
+    min-width: 180px;
+  }
+  
+  .button-container button {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  // Hide desktop table, show mobile cards
+  .table-container {
+    display: none;
+  }
+  
+  .mobile-card-layout {
+    display: block;
+  }
+  
+  .filter-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .filter-field {
+    min-width: 100%;
+  }
+  
+  .button-container {
+    flex-direction: row;
+    align-items: stretch;
+    margin-left: 0;
+    gap: 8px;
+    
+    button {
+      flex: 1;
+      min-width: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+  
+  // Enhanced mobile typography
+  .filter-box {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  ::ng-deep .mat-mdc-form-field {
+    .mat-mdc-form-field-label {
+      font-size: 14px;
+    }
+    
+    .mat-mdc-select-value {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-card-layout .sale-card {
+    padding: 12px;
+    
+    .card-content {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+  
+  .button-container {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+  
+  .filter-box {
+    padding: 12px;
+  }
+}
+
+// Loading state styling
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+// Enhanced pagination for mobile
+::ng-deep .mat-mdc-paginator {
+  .mat-mdc-paginator-container {
+    padding: 8px 16px;
+    
+    @media (max-width: 768px) {
+      padding: 8px 12px;
+      
+      .mat-mdc-paginator-page-size {
+        display: none;
+      }
+      
+      .mat-mdc-paginator-range-actions {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// Mobile empty state styling
+.mobile-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  
+  p {
+    font-size: 16px;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+// Mobile pagination styling
+.mobile-pagination {
+  margin-top: 20px;
+  
+  ::ng-deep .mat-mdc-paginator {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    .mat-mdc-paginator-container {
+      padding: 12px 16px;
+      justify-content: center;
+      
+      .mat-mdc-paginator-page-size {
+        display: none;
+      }
+      
+      .mat-mdc-paginator-range-actions {
+        justify-content: center;
+        gap: 8px;
+        
+        .mat-mdc-paginator-navigation-previous,
+        .mat-mdc-paginator-navigation-next {
+          min-width: 40px;
+          height: 40px;
+        }
+        
+        .mat-mdc-paginator-navigation-first,
+        .mat-mdc-paginator-navigation-last {
+          min-width: 40px;
+          height: 40px;
+        }
+      }
+    }
+  }
+}
+
+// Enhanced accessibility
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .mat-elevation-z8 {
+    border: 2px solid #000;
+  }
+  
+  table th.mat-header-cell {
+    background-color: #000;
+    color: #fff;
+    border-bottom: 2px solid #fff;
+  }
+  
+  table td.mat-cell {
+    border-bottom: 1px solid #000;
+  }
+  
+  .mobile-card-layout .sale-card {
+    border: 2px solid #000;
+  }
+}

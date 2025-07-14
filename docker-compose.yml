@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    networks:
+      - pos-network
+
+  backend:
+    build:
+      context: C:/jcodes/dev/pos-main
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - C:/jcodes/dev/pos-main:/app
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    networks:
+      - pos-network
+
+networks:
+  pos-network:
+    driver: bridge 

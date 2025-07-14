@@ -1,92 +1,208 @@
-@use "sass:map";
-@use "variables";
+@use "sass:math";
+@use "sass:meta";
 
-$utilities: (
-  "font-size": (
-    property: font-size,
-    class: f-s,
-    values: variables.$font-sizes,
-  ),
-  "font-weight": (
-    property: font-weight,
-    class: f-w,
-    values: variables.$font-wieghts,
-  ),
-  "font-style": (
-    property: font-style,
-    class: font,
-    values: italic normal,
-  ),
-  "text-align": (
-    property: text-align,
-    class: text,
-    values: center right left,
-  ),
-  "text-decoration": (
-    property: text-decoration,
-    class: text,
-    values: none underline line-through,
-  ),
-  "text-transform": (
-    property: text-transform,
-    class: text,
-    values: capitalize uppercase lowercase,
-  ),
-  "white-space": (
-    property: white-space,
-    class: text,
-    values: (
-      wrap: normal,
-      nowrap: nowrap,
-    ),
-  ),
-  "word-wrap": (
-    property: word-wrap word-break,
-    class: text,
-    values: (
-      break: break-word,
-    ),
-  ),
-  "text-overflow": (
-    property: text-overflow,
-    class: text,
-    values: ellipsis,
-  ),
-  "text-color": (
-    property: color,
-    class: text,
-    values: (
-      reset: inherit,
-      current: currentColor,
-    ),
-  ),
-);
+// Enhanced Responsive Typography System
+// Mobile-first approach with fluid scaling
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0px;
+// Base font sizes
+$font-size-xs: 0.75rem;    // 12px
+$font-size-sm: 0.875rem;   // 14px
+$font-size-base: 1rem;     // 16px
+$font-size-lg: 1.125rem;   // 18px
+$font-size-xl: 1.25rem;    // 20px
+$font-size-2xl: 1.5rem;    // 24px
+$font-size-3xl: 1.875rem;  // 30px
+$font-size-4xl: 2.25rem;   // 36px
+
+// Line heights
+$line-height-tight: 1.25;
+$line-height-snug: 1.375;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.625;
+$line-height-loose: 2;
+
+// Font weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// Responsive font size mixin
+@mixin responsive-font-size($min-size, $max-size, $min-width: 320px, $max-width: 1200px) {
+  font-size: $min-size;
+  
+  @media (min-width: $min-width) {
+    font-size: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
+  }
+  
+  @media (min-width: $max-width) {
+    font-size: $max-size;
+  }
 }
 
-.lh-lg {
-  line-height: 36px !important;
+// Utility function to strip units
+@function strip-unit($value) {
+  @if meta.type-of($value) == 'number' and not math.is-unitless($value) {
+    @return math.div($value, $value * 0 + 1);
+  }
+  @return $value;
 }
 
-.lh-md {
-  line-height: 26px !important;
+// Base typography classes
+.text-xs { font-size: $font-size-xs; }
+.text-sm { font-size: $font-size-sm; }
+.text-base { font-size: $font-size-base; }
+.text-lg { font-size: $font-size-lg; }
+.text-xl { font-size: $font-size-xl; }
+.text-2xl { font-size: $font-size-2xl; }
+.text-3xl { font-size: $font-size-3xl; }
+.text-4xl { font-size: $font-size-4xl; }
+
+// Responsive text classes
+.text-responsive-sm {
+  @include responsive-font-size($font-size-sm, $font-size-base);
 }
 
-.lh-sm {
-  line-height: 20px !important;
+.text-responsive-base {
+  @include responsive-font-size($font-size-base, $font-size-lg);
 }
 
-.lh-base {
-  line-height: 1.2 !important;
+.text-responsive-lg {
+  @include responsive-font-size($font-size-lg, $font-size-xl);
 }
 
-.z-1 {
-  z-index: 1;
+.text-responsive-xl {
+  @include responsive-font-size($font-size-xl, $font-size-2xl);
+}
+
+.text-responsive-2xl {
+  @include responsive-font-size($font-size-2xl, $font-size-3xl);
+}
+
+.text-responsive-3xl {
+  @include responsive-font-size($font-size-3xl, $font-size-4xl);
+}
+
+// Font weight classes
+.font-light { font-weight: $font-weight-light; }
+.font-normal { font-weight: $font-weight-normal; }
+.font-medium { font-weight: $font-weight-medium; }
+.font-semibold { font-weight: $font-weight-semibold; }
+.font-bold { font-weight: $font-weight-bold; }
+.font-extrabold { font-weight: $font-weight-extrabold; }
+
+// Line height classes
+.leading-tight { line-height: $line-height-tight; }
+.leading-snug { line-height: $line-height-snug; }
+.leading-normal { line-height: $line-height-normal; }
+.leading-relaxed { line-height: $line-height-relaxed; }
+.leading-loose { line-height: $line-height-loose; }
+
+// Text alignment
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+// Text transform
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+.normal-case { text-transform: none; }
+
+// Text decoration
+.underline { text-decoration: underline; }
+.line-through { text-decoration: line-through; }
+.no-underline { text-decoration: none; }
+
+// Letter spacing
+.tracking-tighter { letter-spacing: -0.05em; }
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-normal { letter-spacing: 0; }
+.tracking-wide { letter-spacing: 0.025em; }
+.tracking-wider { letter-spacing: 0.05em; }
+.tracking-widest { letter-spacing: 0.1em; }
+
+// Responsive text alignment
+@media (max-width: 768px) {
+  .text-center-mobile { text-align: center; }
+  .text-left-mobile { text-align: left; }
+  .text-right-mobile { text-align: right; }
+}
+
+@media (min-width: 769px) {
+  .text-center-desktop { text-align: center; }
+  .text-left-desktop { text-align: left; }
+  .text-right-desktop { text-align: right; }
+}
+
+// Truncation utilities
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.break-words {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.break-all {
+  word-break: break-all;
+}
+
+// Selection styling
+::selection {
+  background-color: rgba(0, 123, 255, 0.2);
+  color: inherit;
+}
+
+::-moz-selection {
+  background-color: rgba(0, 123, 255, 0.2);
+  color: inherit;
+}
+
+// Focus styles for accessibility
+.focus-visible {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  body {
+    font-weight: $font-weight-medium;
+  }
+  
+  .text-muted {
+    color: #000 !important;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Print styles
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  p, blockquote, table, figure {
+    page-break-inside: avoid;
+  }
 }
